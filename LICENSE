@@ -1,0 +1,12 @@
+tcxp is licensed under the W3C Software and Document License (LICENSE-W3C).
+
+SPDX-License-Identifier: W3C-20150513
+
+Copyright 2026 Ron Itelman and the tcxp contributors
+
+tcxp is the reference implementation of the Typed Context Protocol, the specification
+developed in the W3C Typed Context Protocol Community Group.
+
+Unless you explicitly state otherwise, any contribution you submit for inclusion is
+offered under the W3C Software and Document License, without additional terms or
+conditions.

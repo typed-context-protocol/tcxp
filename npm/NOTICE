@@ -1,0 +1,6 @@
+tcxp
+Copyright 2026 Ron Itelman and the tcxp contributors
+
+tcxp is the reference implementation of the Typed Context Protocol, the specification
+developed in the W3C Typed Context Protocol Community Group.
+Licensed under W3C-20150513. See LICENSE.

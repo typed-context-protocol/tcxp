@@ -1,0 +1,41 @@
+# Publish on a version tag (v0.1.0). PyPI uses trusted publishing (no token stored):
+# add this repository as a trusted publisher on pypi.org for project "tcxp" first.
+# npm needs an NPM_TOKEN secret (or npm trusted publishing once enabled for the package).
+name: release
+on:
+  push: { tags: ["v*"] }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "20", registry-url: "https://registry.npmjs.org" }
+      - run: pip install build pytest && pytest -q
+      - run: sh tools/bundle_npm.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: dist, path: dist/ }
+      - uses: actions/upload-artifact@v4
+        with: { name: npm, path: npm/ }
+  pypi:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions: { id-token: write }
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: dist, path: dist/ }
+      - uses: pypa/gh-action-pypi-publish@release/v1
+  npm:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: { id-token: write }
+    steps:
+      - uses: actions/setup-node@v4
+        with: { node-version: "20", registry-url: "https://registry.npmjs.org" }
+      - uses: actions/download-artifact@v4
+        with: { name: npm, path: npm/ }
+      - run: cd npm && npm publish --provenance --access public
+        env: { NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}" }

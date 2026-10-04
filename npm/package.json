@@ -1,0 +1,55 @@
+{
+  "name": "tcxp",
+  "version": "0.1.0",
+  "description": "Typed Context Protocol: canonical tcxp addresses for JavaScript, plus the `tcxp` command (bundles the Python library and the animated docs).",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./server": "./lib/server.js",
+    "./python": "./lib/python.js"
+  },
+  "bin": {
+    "tcxp": "bin/tcxp.js"
+  },
+  "files": [
+    "index.js",
+    "bin/",
+    "lib/",
+    "python/",
+    "docs/",
+    "vectors.json",
+    "README.md",
+    "LICENSE",
+    "LICENSE-W3C",
+    "NOTICE",
+    "flow/",
+    "tql_vectors.json",
+    "test-flow.js"
+  ],
+  "scripts": {
+    "test": "node test.js && node test-flow.js",
+    "bundle": "sh ../tools/bundle_npm.sh",
+    "test:server": "node test-server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "tcxp",
+    "typed context",
+    "context object",
+    "uri",
+    "w3c",
+    "llm",
+    "agents"
+  ],
+  "author": "Ron Itelman <ron@ronitelman.com>",
+  "license": "W3C-20150513",
+  "homepage": "https://github.com/typed-context-protocol/tcxp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typed-context-protocol/tcxp.git",
+    "directory": "npm"
+  }
+}

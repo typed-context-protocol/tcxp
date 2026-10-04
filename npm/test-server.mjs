@@ -1,0 +1,22 @@
+// Server smoke test: docs page, API index, allow-list enforcement, a real fleet run.
+import { createTcxpServer } from "./lib/server.js";
+const srv = createTcxpServer().listen(0, "127.0.0.1");
+await new Promise((r) => srv.once("listening", r));
+const base = `http://127.0.0.1:${srv.address().port}`;
+const get = async (p) => { const r = await fetch(base + p); return [r.status, r.headers.get("content-type"), await r.text()]; };
+const check = (ok, msg) => { if (!ok) { console.error("FAIL", msg); process.exitCode = 1; } else console.log("ok  ", msg); };
+let [s, t, b] = await get("/");
+check(s === 200 && t.startsWith("text/html") && b.trimStart().toLowerCase().startsWith("<!doctype html"), "docs page is served as HTML");
+[s, , b] = await get("/api"); check(s === 200 && JSON.parse(b).commands.fleet, "API index lists commands");
+[s, , b] = await get("/api/parse?a=" + encodeURIComponent("!tcxp:/r?b=2&a=1")); check(JSON.parse(b).address === "!tcxp:/r?a=1&b=2", "parse canonicalizes");
+[s] = await get("/api/fleet?session=x"); check(s === 400, "--session is refused");
+[s] = await get("/api/bench?real=1"); check(s === 400, "--real is refused");
+[s] = await get("/api/fleet?seed=" + encodeURIComponent("1;rm -rf /")); check(s === 400, "unsafe values are refused");
+[s] = await get("/api/nope"); check(s === 404, "unknown endpoints 404");
+[s, , b] = await get("/api/fleet?observatrons=200&epochs=2");
+check(s === 200 && JSON.parse(b).result.totals.length === 4, "fleet runs through Python and returns JSON");
+[s, t, b] = await get("/flow/");
+check(s === 200 && t.startsWith("text/html") && b.includes("tcxp Flow"), "flow page is served");
+[s, t] = await get("/flow/tql.js"); check(s === 200 && t.startsWith("text/javascript"), "flow modules are served");
+[s] = await get("/flow/../lib/python.js"); check(s === 404, "nothing outside the allow-list is served");
+srv.close();

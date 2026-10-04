@@ -1,0 +1,466 @@
+{
+  "format": "tcxp-conformance/1",
+  "library": "0.1.0",
+  "valid": [
+    {
+      "input": "!tcxp:/reason?tax_year=&task=section_41",
+      "canonical": "!tcxp:/reason?task=section_41&tax_year=",
+      "uri": "tcxp:/reason?task=section_41&tax_year=",
+      "form": "virtual",
+      "authority": "",
+      "path": "reason",
+      "params": [
+        [
+          "task",
+          [
+            "section_41"
+          ]
+        ],
+        [
+          "tax_year",
+          [
+            ""
+          ]
+        ]
+      ],
+      "note": "basic virtual; empty value is Dark"
+    },
+    {
+      "input": "!tcxp:/reason?task=section_41&tax_year=",
+      "canonical": "!tcxp:/reason?task=section_41&tax_year=",
+      "uri": "tcxp:/reason?task=section_41&tax_year=",
+      "form": "virtual",
+      "authority": "",
+      "path": "reason",
+      "params": [
+        [
+          "task",
+          [
+            "section_41"
+          ]
+        ],
+        [
+          "tax_year",
+          [
+            ""
+          ]
+        ]
+      ],
+      "note": "keys are sorted in canonical form"
+    },
+    {
+      "input": "!tcxp:/a?b=2&b=1",
+      "canonical": "!tcxp:/a?b=2&b=1",
+      "uri": "tcxp:/a?b=2&b=1",
+      "form": "virtual",
+      "authority": "",
+      "path": "a",
+      "params": [
+        [
+          "b",
+          [
+            "2",
+            "1"
+          ]
+        ]
+      ],
+      "note": "repeated keys keep their order (a list)"
+    },
+    {
+      "input": "tcxp:/reason?x=1",
+      "canonical": "!tcxp:/reason?x=1",
+      "uri": "tcxp:/reason?x=1",
+      "form": "virtual",
+      "authority": "",
+      "path": "reason",
+      "params": [
+        [
+          "x",
+          [
+            "1"
+          ]
+        ]
+      ],
+      "note": "valid-URI spelling of a virtual pointer reads as virtual"
+    },
+    {
+      "input": "tcxp://registry.example/handlers/join?mode=strict",
+      "canonical": "tcxp://registry.example/handlers/join?mode=strict",
+      "uri": "tcxp://registry.example/handlers/join?mode=strict",
+      "form": "tcxp",
+      "authority": "registry.example",
+      "path": "handlers/join",
+      "params": [
+        [
+          "mode",
+          [
+            "strict"
+          ]
+        ]
+      ],
+      "note": "real protocol address"
+    },
+    {
+      "input": "https://example.com/api/tcxp/handlers/join?mode=strict",
+      "canonical": "https://example.com/api/tcxp/handlers/join?mode=strict",
+      "uri": "https://example.com/api/tcxp/handlers/join?mode=strict",
+      "form": "https",
+      "authority": "example.com/api",
+      "path": "handlers/join",
+      "params": [
+        [
+          "mode",
+          [
+            "strict"
+          ]
+        ]
+      ],
+      "note": "https carrier form"
+    },
+    {
+      "input": "!tcxp:/q?text=what%20happened%20yesterday%3F",
+      "canonical": "!tcxp:/q?text=what%20happened%20yesterday%3F",
+      "uri": "tcxp:/q?text=what%20happened%20yesterday%3F",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "text",
+          [
+            "what happened yesterday?"
+          ]
+        ]
+      ],
+      "note": "spaces and ? are percent-encoded"
+    },
+    {
+      "input": "!tcxp:/q?text=caf%C3%A9",
+      "canonical": "!tcxp:/q?text=caf%C3%A9",
+      "uri": "tcxp:/q?text=caf%C3%A9",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "text",
+          [
+            "café"
+          ]
+        ]
+      ],
+      "note": "UTF-8 percent-encoding, uppercase hex"
+    },
+    {
+      "input": "!tcxp:/q?text=caf%c3%a9",
+      "canonical": "!tcxp:/q?text=caf%C3%A9",
+      "uri": "tcxp:/q?text=caf%C3%A9",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "text",
+          [
+            "café"
+          ]
+        ]
+      ],
+      "note": "lowercase hex is normalized to uppercase"
+    },
+    {
+      "input": "!tcxp:/q?date.meaning=!tcxp:/time/relative/yesterday",
+      "canonical": "!tcxp:/q?date.meaning=!tcxp:/time/relative/yesterday",
+      "uri": "tcxp:/q?date.meaning=!tcxp:/time/relative/yesterday",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "date.meaning",
+          [
+            "!tcxp:/time/relative/yesterday"
+          ]
+        ]
+      ],
+      "note": "nested pointer value stays readable"
+    },
+    {
+      "input": "!tcxp:/q?ptr=tcxp:/time/relative/yesterday",
+      "canonical": "!tcxp:/q?ptr=!tcxp:/time/relative/yesterday",
+      "uri": "tcxp:/q?ptr=!tcxp:/time/relative/yesterday",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "ptr",
+          [
+            "!tcxp:/time/relative/yesterday"
+          ]
+        ]
+      ],
+      "note": "nested pointer written as tcxp:/ is canonicalized to !tcxp:/"
+    },
+    {
+      "input": "!tcxp:/q?nested=!tcxp:/a%3Fb%3D1",
+      "canonical": "!tcxp:/q?nested=!tcxp:/a%3Fb%3D1",
+      "uri": "tcxp:/q?nested=!tcxp:/a%3Fb%3D1",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "nested",
+          [
+            "!tcxp:/a?b=1"
+          ]
+        ]
+      ],
+      "note": "nested address with its own query is percent-encoded"
+    },
+    {
+      "input": "!tcxp:/q?flag",
+      "canonical": "!tcxp:/q?flag=",
+      "uri": "tcxp:/q?flag=",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "flag",
+          [
+            ""
+          ]
+        ]
+      ],
+      "note": "a key with no '=' has an empty (Dark) value"
+    },
+    {
+      "input": "!tcxp:/q?plus=a+b",
+      "canonical": "!tcxp:/q?plus=a%2Bb",
+      "uri": "tcxp:/q?plus=a%2Bb",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "plus",
+          [
+            "a+b"
+          ]
+        ]
+      ],
+      "note": "'+' is a literal plus, never a space"
+    },
+    {
+      "input": "!tcxp:/q?h=@core.update",
+      "canonical": "!tcxp:/q?h=@core.update",
+      "uri": "tcxp:/q?h=@core.update",
+      "form": "virtual",
+      "authority": "",
+      "path": "q",
+      "params": [
+        [
+          "h",
+          [
+            "@core.update"
+          ]
+        ]
+      ],
+      "note": "'@' handler references are allowed unencoded"
+    },
+    {
+      "input": "!tcxp:/",
+      "canonical": "!tcxp:/",
+      "uri": "tcxp:/",
+      "form": "virtual",
+      "authority": "",
+      "path": "",
+      "params": [],
+      "note": "root virtual pointer"
+    },
+    {
+      "input": "!tcxp:/lib/tcxp?dialect=tcxp-sql/0.1&version=0.1.0",
+      "canonical": "!tcxp:/lib/tcxp?dialect=tcxp-sql/0.1&version=0.1.0",
+      "uri": "tcxp:/lib/tcxp?dialect=tcxp-sql/0.1&version=0.1.0",
+      "form": "virtual",
+      "authority": "",
+      "path": "lib/tcxp",
+      "params": [
+        [
+          "dialect",
+          [
+            "tcxp-sql/0.1"
+          ]
+        ],
+        [
+          "version",
+          [
+            "0.1.0"
+          ]
+        ]
+      ],
+      "note": "the library's own version address"
+    },
+    {
+      "input": "!tcxp:/a?k=%F0%9F%98%80",
+      "canonical": "!tcxp:/a?k=%F0%9F%98%80",
+      "uri": "tcxp:/a?k=%F0%9F%98%80",
+      "form": "virtual",
+      "authority": "",
+      "path": "a",
+      "params": [
+        [
+          "k",
+          [
+            "😀"
+          ]
+        ]
+      ],
+      "note": "emoji, percent-encoded (4 UTF-8 bytes)"
+    },
+    {
+      "input": "!tcxp:/a?note=tcxp%3A%20is%20a%20protocol",
+      "canonical": "!tcxp:/a?note=tcxp:%20is%20a%20protocol",
+      "uri": "tcxp:/a?note=tcxp:%20is%20a%20protocol",
+      "form": "virtual",
+      "authority": "",
+      "path": "a",
+      "params": [
+        [
+          "note",
+          [
+            "tcxp: is a protocol"
+          ]
+        ]
+      ],
+      "note": "text that starts with 'tcxp:' but isn't an address stays text"
+    },
+    {
+      "input": "!tcxp:/a?k=%1C",
+      "canonical": "!tcxp:/a?k=%1C",
+      "uri": "tcxp:/a?k=%1C",
+      "form": "virtual",
+      "authority": "",
+      "path": "a",
+      "params": [
+        [
+          "k",
+          [
+            "\u001c"
+          ]
+        ]
+      ],
+      "note": "control characters are allowed when percent-encoded"
+    },
+    {
+      "input": "!tcxp:/a?k=%EF%BB%BF",
+      "canonical": "!tcxp:/a?k=%EF%BB%BF",
+      "uri": "tcxp:/a?k=%EF%BB%BF",
+      "form": "virtual",
+      "authority": "",
+      "path": "a",
+      "params": [
+        [
+          "k",
+          [
+            "﻿"
+          ]
+        ]
+      ],
+      "note": "a byte-order mark is allowed when percent-encoded"
+    },
+    {
+      "input": "tcxp://registry.example:8443/h?x=1",
+      "canonical": "tcxp://registry.example:8443/h?x=1",
+      "uri": "tcxp://registry.example:8443/h?x=1",
+      "form": "tcxp",
+      "authority": "registry.example:8443",
+      "path": "h",
+      "params": [
+        [
+          "x",
+          [
+            "1"
+          ]
+        ]
+      ],
+      "note": "tcxp:// with a port"
+    }
+  ],
+  "invalid": [
+    {
+      "input": "!tcxp://host/path",
+      "note": "a virtual pointer has no host"
+    },
+    {
+      "input": "!tcxp:/a#frag",
+      "note": "fragments are not part of tcxp state"
+    },
+    {
+      "input": "!tcxp:/a b",
+      "note": "spaces must be percent-encoded"
+    },
+    {
+      "input": "!tcxp:/a?bad%2",
+      "note": "broken percent-encoding"
+    },
+    {
+      "input": "!tcxp:/a?k%20y=1",
+      "note": "keys use letters, digits, '_', '.', '-' only"
+    },
+    {
+      "input": "!tcxp:/a/",
+      "note": "paths cannot end with '/'"
+    },
+    {
+      "input": "!tcxp:/a//b",
+      "note": "empty path segment"
+    },
+    {
+      "input": "!tcxp:/a?x=1&&y=2",
+      "note": "empty parameter"
+    },
+    {
+      "input": "http://example.com/tcxp/a",
+      "note": "http is not a tcxp form"
+    },
+    {
+      "input": "https://example.com/a",
+      "note": "an https carrier needs /tcxp/"
+    },
+    {
+      "input": "tcp:/a",
+      "note": "unknown scheme"
+    },
+    {
+      "input": "!tcxp:/a?x=%FF",
+      "note": "percent bytes must be valid UTF-8"
+    },
+    {
+      "input": "!tcxp:/a?k=😀",
+      "note": "raw non-ASCII must be percent-encoded"
+    },
+    {
+      "input": "!tcxp:/a?k=café",
+      "note": "raw non-ASCII must be percent-encoded"
+    },
+    {
+      "input": "!tcxp:/a?k=\u001c",
+      "note": "raw control characters are not allowed"
+    },
+    {
+      "input": "!tcxp:/a?k=﻿",
+      "note": "raw byte-order mark is not allowed"
+    },
+    {
+      "input": "!tcxp:/a?k%0A=1",
+      "note": "a key cannot contain a newline, even percent-encoded"
+    },
+    {
+      "input": "!tcxp:/a?k=x\n",
+      "note": "a trailing newline is not allowed"
+    }
+  ]
+}

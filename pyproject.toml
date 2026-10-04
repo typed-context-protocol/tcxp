@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tcxp"
+dynamic = ["version"]
+description = "Typed Context Protocol: context objects as addresses, a decision gate, a trace you can replay, and simulators to measure what typed context is worth."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "W3C-20150513"
+license-files = ["LICENSE", "LICENSE-W3C", "NOTICE"]
+authors = [{ name = "Ron Itelman", email = "ron@ronitelman.com" }]
+keywords = ["tcxp", "typed context", "context object", "uri", "llm", "agents", "w3c", "decision gate"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Framework :: Jupyter",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries",
+  "Typing :: Typed",
+]
+dependencies = []   # standard library only
+
+[project.optional-dependencies]
+notebook = ["pandas>=1.5", "matplotlib>=3.6", "ipywidgets>=8"]
+dev = ["pytest>=7", "build>=1", "twine>=5"]
+
+[project.scripts]
+tcxp = "tcxp.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/typed-context-protocol/tcxp"
+Documentation = "https://github.com/typed-context-protocol/tcxp/blob/main/docs/REFERENCE.md"
+Changelog = "https://github.com/typed-context-protocol/tcxp/blob/main/CHANGELOG.md"
+"W3C Community Group" = "https://www.w3.org/community/"
+
+[tool.hatch.version]
+path = "src/tcxp/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tcxp"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src/tcxp", "/tests", "/conformance", "/docs", "/examples", "/tools", "/README.md", "/CHANGELOG.md",
+           "/LICENSE", "/LICENSE-W3C", "/NOTICE", "/pyproject.toml", "/install.sh"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

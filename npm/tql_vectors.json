@@ -1,0 +1,439 @@
+{
+ "states": {
+  "s1": {
+   "query": "Paid yesterday for tax year 2024",
+   "tax_year": "2024",
+   "country": "US",
+   "amount": "1200"
+  },
+  "s2": {
+   "query": "what did we pay?",
+   "tax_year": "",
+   "country": "CA"
+  }
+ },
+ "valid": [
+  {
+   "test": "known(tax_year)",
+   "canonical": "known(tax_year)",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "known(tax_year)",
+   "canonical": "known(tax_year)",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "dark(tax_year)",
+   "canonical": "dark(tax_year)",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "dark(tax_year)",
+   "canonical": "dark(tax_year)",
+   "state": "s2",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"yesterday\")",
+   "canonical": "has(query, \"yesterday\")",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"yesterday\")",
+   "canonical": "has(query, \"yesterday\")",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"Yesterday\")",
+   "canonical": "has(query, \"Yesterday\")",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"Yesterday\")",
+   "canonical": "has(query, \"Yesterday\")",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"yes\")",
+   "canonical": "has(query, \"yes\")",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"yes\")",
+   "canonical": "has(query, \"yes\")",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "country = \"US\"",
+   "canonical": "country = \"US\"",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "country = \"US\"",
+   "canonical": "country = \"US\"",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "country != \"US\"",
+   "canonical": "country != \"US\"",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "country != \"US\"",
+   "canonical": "country != \"US\"",
+   "state": "s2",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "amount > 1000",
+   "canonical": "amount > 1000",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "amount > 1000",
+   "canonical": "amount > 1000",
+   "state": "s2",
+   "result": null,
+   "dark": [
+    "amount"
+   ]
+  },
+  {
+   "test": "amount <= 999.5",
+   "canonical": "amount <= 999.5",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "amount <= 999.5",
+   "canonical": "amount <= 999.5",
+   "state": "s2",
+   "result": null,
+   "dark": [
+    "amount"
+   ]
+  },
+  {
+   "test": "tax_year >= 2024",
+   "canonical": "tax_year >= 2024",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "tax_year >= 2024",
+   "canonical": "tax_year >= 2024",
+   "state": "s2",
+   "result": null,
+   "dark": [
+    "tax_year"
+   ]
+  },
+  {
+   "test": "known(tax_year) and country = \"US\"",
+   "canonical": "known(tax_year) and country = \"US\"",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "known(tax_year) and country = \"US\"",
+   "canonical": "known(tax_year) and country = \"US\"",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "not known(tax_year)",
+   "canonical": "not known(tax_year)",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "not known(tax_year)",
+   "canonical": "not known(tax_year)",
+   "state": "s2",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "not (country = \"US\" or amount > 5)",
+   "canonical": "not (country = \"US\" or amount > 5)",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "not (country = \"US\" or amount > 5)",
+   "canonical": "not (country = \"US\" or amount > 5)",
+   "state": "s2",
+   "result": null,
+   "dark": [
+    "amount"
+   ]
+  },
+  {
+   "test": "has(query,\"x\") or country = \"US\"",
+   "canonical": "has(query, \"x\") or country = \"US\"",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "has(query,\"x\") or country = \"US\"",
+   "canonical": "has(query, \"x\") or country = \"US\"",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "tax_year = 2024 and has(query, \"paid\")",
+   "canonical": "tax_year = 2024 and has(query, \"paid\")",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "tax_year = 2024 and has(query, \"paid\")",
+   "canonical": "tax_year = 2024 and has(query, \"paid\")",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "country = \"US\" and not dark(country)",
+   "canonical": "country = \"US\" and not dark(country)",
+   "state": "s1",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "country = \"US\" and not dark(country)",
+   "canonical": "country = \"US\" and not dark(country)",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "known(a) and known(b) or known(c)",
+   "canonical": "(known(a) and known(b)) or known(c)",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "known(a) and known(b) or known(c)",
+   "canonical": "(known(a) and known(b)) or known(c)",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "known(a) and (known(b) or known(c))",
+   "canonical": "known(a) and (known(b) or known(c))",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "known(a) and (known(b) or known(c))",
+   "canonical": "known(a) and (known(b) or known(c))",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "missing = \"x\"",
+   "canonical": "missing = \"x\"",
+   "state": "s1",
+   "result": null,
+   "dark": [
+    "missing"
+   ]
+  },
+  {
+   "test": "missing = \"x\"",
+   "canonical": "missing = \"x\"",
+   "state": "s2",
+   "result": null,
+   "dark": [
+    "missing"
+   ]
+  },
+  {
+   "test": "not missing = \"x\"",
+   "canonical": "not (missing = \"x\")",
+   "state": "s1",
+   "result": null,
+   "dark": [
+    "missing"
+   ]
+  },
+  {
+   "test": "not missing = \"x\"",
+   "canonical": "not (missing = \"x\")",
+   "state": "s2",
+   "result": null,
+   "dark": [
+    "missing"
+   ]
+  },
+  {
+   "test": "missing = \"x\" or country = \"CA\"",
+   "canonical": "missing = \"x\" or country = \"CA\"",
+   "state": "s1",
+   "result": null,
+   "dark": [
+    "missing"
+   ]
+  },
+  {
+   "test": "missing = \"x\" or country = \"CA\"",
+   "canonical": "missing = \"x\" or country = \"CA\"",
+   "state": "s2",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "missing = \"x\" and country = \"US\"",
+   "canonical": "missing = \"x\" and country = \"US\"",
+   "state": "s1",
+   "result": null,
+   "dark": [
+    "missing"
+   ]
+  },
+  {
+   "test": "missing = \"x\" and country = \"US\"",
+   "canonical": "missing = \"x\" and country = \"US\"",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"what did\")",
+   "canonical": "has(query, \"what did\")",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"what did\")",
+   "canonical": "has(query, \"what did\")",
+   "state": "s2",
+   "result": true,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"\\\"quoted\\\"\")",
+   "canonical": "has(query, \"\\\"quoted\\\"\")",
+   "state": "s1",
+   "result": false,
+   "dark": []
+  },
+  {
+   "test": "has(query, \"\\\"quoted\\\"\")",
+   "canonical": "has(query, \"\\\"quoted\\\"\")",
+   "state": "s2",
+   "result": false,
+   "dark": []
+  }
+ ],
+ "invalid": [
+  "",
+  "known(",
+  "known tax_year",
+  "has(query yesterday)",
+  "country = US",
+  "and known(x)",
+  "known(x) or",
+  "x ~ 3",
+  "(known(x)",
+  "country == \"US\"",
+  "has(query, 3)"
+ ],
+ "cards": [
+  {
+   "card": "If the query contains yesterday, highlight it.",
+   "address": "!tcxp:/gate/mentions-yesterday?card=If%20the%20query%20contains%20yesterday%2C%20highlight%20it.&false.do=&status=proposed&test=has%28query%2C%20%22yesterday%22%29&true.do=@core.highlight%3Fword%3Dyesterday%26color%3Dyellow"
+  },
+  {
+   "card": "For Section 41 tax preparation, when we get CSVs, require the tax year.",
+   "address": "!tcxp:/gate/tax-year-required?card=For%20Section%2041%20tax%20preparation%2C%20when%20we%20get%20CSVs%2C%20require%20the%20tax%20year.&false.do=@core.ask%3Fkey%3Dtax_year&status=proposed&test=known%28tax_year%29&true.do="
+  },
+  {
+   "card": "Don't give the answer until the tax year is confirmed",
+   "address": "!tcxp:/gate/tax-year-required?card=Don%27t%20give%20the%20answer%20until%20the%20tax%20year%20is%20confirmed&false.do=@core.ask%3Fkey%3Dtax_year&status=proposed&test=known%28tax_year%29&true.do="
+  },
+  {
+   "card": "If the question mentions \"last quarter\" then highlight it",
+   "address": "!tcxp:/gate/mentions-last-quarter?card=If%20the%20question%20mentions%20%22last%20quarter%22%20then%20highlight%20it&false.do=&status=proposed&test=has%28query%2C%20%22last%20quarter%22%29&true.do=@core.highlight%3Fword%3Dlast%2520quarter%26color%3Dyellow"
+  },
+  {
+   "card": "If the query contains ASAP, alert that it is urgent",
+   "address": "!tcxp:/gate/mentions-asap?card=If%20the%20query%20contains%20ASAP%2C%20alert%20that%20it%20is%20urgent&false.do=&status=proposed&test=has%28query%2C%20%22ASAP%22%29&true.do=@core.notify%3Fmessage%3Dit%2520is%2520urgent%26gate%3Dmentions-asap"
+  },
+  {
+   "card": "Test: known(tax_year) and country = \"US\"",
+   "address": "!tcxp:/gate/known-tax-year-and-country-us?card=Test:%20known%28tax_year%29%20and%20country%20%3D%20%22US%22&false.do=&status=proposed&test=known%28tax_year%29%20and%20country%20%3D%20%22US%22&true.do="
+  },
+  {
+   "card": "We need the client before running payroll queries",
+   "address": "!tcxp:/gate/client-required?card=We%20need%20the%20client%20before%20running%20payroll%20queries&false.do=@core.ask%3Fkey%3Dclient&status=proposed&test=known%28client%29&true.do="
+  }
+ ],
+ "attach": [
+  {
+   "card": "If false, alert that it's halted and you cannot proceed.",
+   "address": "!tcxp:/gate/tax-year-required?card=If%20false%2C%20alert%20that%20it%27s%20halted%20and%20you%20cannot%20proceed.&false.do=@core.ask%3Fkey%3Dtax_year&false.do=@core.notify%3Fmessage%3Dit%2527s%2520halted%2520and%2520you%2520cannot%2520proceed%26gate%3Dtax-year-required&false.do=@core.halt%3Freason%3Dit%2527s%2520halted%2520and%2520you%2520cannot%2520proceed&status=proposed&test=known%28tax_year%29&true.do=",
+   "new": false
+  },
+  {
+   "card": "Otherwise ask for the country and halt",
+   "address": "!tcxp:/gate/tax-year-required?card=Otherwise%20ask%20for%20the%20country%20and%20halt&false.do=@core.ask%3Fkey%3Dtax_year&false.do=@core.ask%3Fkey%3Dcountry&false.do=@core.halt%3Freason%3Dhalt&status=proposed&test=known%28tax_year%29&true.do=",
+   "new": false
+  },
+  {
+   "card": "If true, note that the year is set",
+   "address": "!tcxp:/gate/tax-year-required?card=If%20true%2C%20note%20that%20the%20year%20is%20set&false.do=@core.ask%3Fkey%3Dtax_year&status=proposed&test=known%28tax_year%29&true.do=@core.log%3Fmessage%3Dthe%2520year%2520is%2520set",
+   "new": false
+  },
+  {
+   "card": "If the query contains yesterday, highlight it and alert that relative dates need a reference date",
+   "address": "!tcxp:/gate/mentions-yesterday?card=If%20the%20query%20contains%20yesterday%2C%20highlight%20it%20and%20alert%20that%20relative%20dates%20need%20a%20reference%20date&false.do=&status=proposed&test=has%28query%2C%20%22yesterday%22%29&true.do=@core.highlight%3Fword%3Dyesterday%26color%3Dyellow&true.do=@core.notify%3Fmessage%3Drelative%2520dates%2520need%2520a%2520reference%2520date%26gate%3Dmentions-yesterday",
+   "new": true
+  }
+ ],
+ "base_gate": "!tcxp:/gate/tax-year-required?false.do=@core.ask%3Fkey%3Dtax_year&status=proposed&test=known%28tax_year%29&true.do="
+}

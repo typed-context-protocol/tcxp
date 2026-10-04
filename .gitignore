@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+.venv/
+tcxp-session.json
+npm/python/
+npm/docs/
+npm/node_modules/
+*.tgz
+AGENT_INSTRUCTIONS.md
+.DS_Store
