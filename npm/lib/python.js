@@ -13,6 +13,8 @@ export const PKG = join(HERE, "..");
 export const HOME = process.env.TCXP_HOME || join(homedir(), ".tcxp");
 export const VENV = join(HOME, "venv");
 const WIN = process.platform === "win32";
+// Python on Windows writes piped output in the locale code page; make every child use UTF-8.
+const pyEnv = (env = process.env) => ({ ...env, PYTHONUTF8: "1", PYTHONIOENCODING: "utf-8" });
 export const venvBin = (name) => join(VENV, WIN ? "Scripts" : "bin", WIN ? `${name}.exe` : name);
 
 export function bundledWheel() {
@@ -27,7 +29,7 @@ export function findPython() {
     : WIN ? ["py", "python", "python3"] : ["python3", "python", "python3.13", "python3.12", "python3.11", "python3.10"];
   for (const cmd of candidates) {
     const args = cmd === "py" ? ["-3", "-c"] : ["-c"];
-    const r = spawnSync(cmd, [...args, "import sys; print('%d.%d' % sys.version_info[:2])"], { encoding: "utf8" });
+    const r = spawnSync(cmd, [...args, "import sys; print('%d.%d' % sys.version_info[:2])"], { encoding: "utf8", env: pyEnv() });
     if (r.status !== 0) continue;
     const [maj, min] = r.stdout.trim().split(".").map(Number);
     if (maj === 3 && min >= 10) return cmd === "py" ? ["py", "-3"] : [cmd];
@@ -50,17 +52,17 @@ export function setup({ quiet = false, force = false } = {}) {
   mkdirSync(HOME, { recursive: true });
   if (force || !existsSync(venvBin("python"))) {
     log(`tcxp: creating a Python environment in ${VENV}`);
-    const r = spawnSync(py[0], [...py.slice(1), "-m", "venv", "--clear", VENV], { stdio: quiet ? "ignore" : "inherit" });
+    const r = spawnSync(py[0], [...py.slice(1), "-m", "venv", "--clear", VENV], { stdio: quiet ? "ignore" : "inherit", env: pyEnv() });
     if (r.status !== 0) throw new Error(`Could not create a virtual environment with ${py.join(" ")} -m venv. On Debian/Ubuntu, install python3-venv.`);
   }
   log(`tcxp: installing the bundled Python library (tcxp ${VERSION})`);
   const r = spawnSync(venvBin("python"), ["-m", "pip", "install", "--quiet", "--disable-pip-version-check",
-    "--no-index", "--force-reinstall", bundledWheel()], { stdio: quiet ? "ignore" : "inherit" });
+    "--no-index", "--force-reinstall", bundledWheel()], { stdio: quiet ? "ignore" : "inherit", env: pyEnv() });
   if (r.status !== 0) throw new Error("pip could not install the bundled tcxp wheel.");
   writeFileSync(stamp(), JSON.stringify({ version: VERSION, python: py.join(" "), at: new Date().toISOString() }) + "\n");
   return venvBin("tcxp");
 }
 
 export function runPython(args, opts = {}) {
-  return spawnSync(setup({ quiet: opts.quiet }), args, { encoding: "utf8", ...opts });
+  return spawnSync(setup({ quiet: opts.quiet }), args, { encoding: "utf8", ...opts, env: pyEnv(opts.env) });
 }

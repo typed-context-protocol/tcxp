@@ -373,6 +373,10 @@ def _cmd_learn(a: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows writes piped output in the locale code page (cp1252), which can't encode `→`.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure") and (stream.encoding or "").lower().replace("-", "") != "utf8":
+            stream.reconfigure(encoding="utf-8", errors="replace")
     from .session import DEFAULT_PATH
     p = argparse.ArgumentParser(prog="tcxp", description=f"tcxp {__version__}: the Typed ConteXt Protocol")
     p.add_argument("--session", default=str(DEFAULT_PATH), help="session file (default: ./tcxp-session.json)")
