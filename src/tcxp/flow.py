@@ -176,7 +176,8 @@ def format_tql(node: tuple) -> str:
         return f"has({node[1]}, {_quote(node[2])})"
     if kind == "cmp":
         v = node[3]
-        return f"{node[1]} {node[2]} {v if re.fullmatch(r'-?\d+(?:\.\d+)?', v) else _quote(v)}"
+        num = re.fullmatch(r'-?\d+(?:\.\d+)?', v)
+        return f"{node[1]} {node[2]} {v if num else _quote(v)}"
     if kind == "not":
         inner = format_tql(node[1])
         return f"not {inner}" if node[1][0] in ("known", "dark", "has", "not") else f"not ({inner})"
